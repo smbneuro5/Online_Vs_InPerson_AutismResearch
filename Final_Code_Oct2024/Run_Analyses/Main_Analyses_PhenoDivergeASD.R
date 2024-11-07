@@ -325,7 +325,7 @@ aggregate(rejR_nc ~ ASD_group, db_full_matched, function(x) c(mean = mean(x), sd
 aggregate(rejR_H_ic ~ ASD_group, db_full_matched, function(x) c(mean = mean(x), sd = sd(x)))
 
 # Put data into "long" format
-db_full_matched_rejrate <- subset(db_full_matched, select=c(sub_id, ASD_group, sex, age, rejR_ic, rejR_nc, weights, pair_id))
+db_full_matched_rejrate <- subset(db_full_matched, select=c(sub_id, ASD_group, sex, age, rejR_ic, rejR_nc, pair_id))
 db_full_matched_RRLong<- pivot_longer(db_full_matched_rejrate, rejR_ic:rejR_nc, values_to = "Rejection Rate", names_to = "Condition")
 
 #Mixed-Effects Model with random intercept for pair
@@ -362,7 +362,7 @@ ggplot(data=sum_RejRate, aes(y=`Rejection Rate`, x=(factor(Condition)), group=AS
 #### ~~ Rejection Rate by Offer Size ~~ ####
 library(plotrix)
 
-db_rr_ic <- subset(db_full_matched, select=c(sub_id, ASD_group, rejR_L_ic, rejR_M_ic, rejR_H_ic, age, sex, demo_ladder_rate, weights, pair_id)) #get rejection rates for controllable condition
+db_rr_ic <- subset(db_full_matched, select=c(sub_id, ASD_group, rejR_L_ic, rejR_M_ic, rejR_H_ic, age, sex, demo_ladder_rate, pair_id)) #get rejection rates for controllable condition
 db_rr_ic <- db_rr_ic[!is.na(db_rr_ic$ASD_group),] #remove those not in top and bottom quartile
 db_rr_ic$rejR_L_ic[db_rr_ic$rejR_L_ic == "NaN"] <- NA #recode missing values
 db_rr_ic$rejR_M_ic[db_rr_ic$rejR_M_ic == "NaN"] <- NA #recode missing values
@@ -403,7 +403,7 @@ rr_IC_mean$`Offer Size`<-ifelse(rr_IC_mean$`Offer Size`=="rejR_L_nc", "1-3",    
                                                             ifelse(rr_IC_mean$`Offer Size`=="rejR_H_ic", "7-9", NA))))))
 
 
-db_rr_nc <- subset(db_full_matched, select=c(sub_id, ASD_group, rejR_L_nc, rejR_M_nc, rejR_H_nc,  age, sex, demo_ladder_rate, weights, pair_id)) #get rejection rates for controllable condition
+db_rr_nc <- subset(db_full_matched, select=c(sub_id, ASD_group, rejR_L_nc, rejR_M_nc, rejR_H_nc,  age, sex, demo_ladder_rate, pair_id)) #get rejection rates for controllable condition
 db_rr_nc <- db_rr_nc[!is.na(db_rr_nc$ASD_group),] #remove those not in top and bottom quartile
 db_rr_nc$rejR_L_nc[db_rr_nc$rejR_L_nc == "NaN"] <- NA #recode missing values
 db_rr_nc$rejR_M_nc[db_rr_nc$rejR_M_nc == "NaN"] <- NA #recode missing values
@@ -564,7 +564,7 @@ aggregate(pc_ic ~ ASD_group, db_full_matched, function(x) c(mean = mean(x), sd =
 aggregate(pc_nc ~ ASD_group, db_full_matched, function(x) c(mean = mean(x), sd = sd(x)))
 
 # Put data into "long" format
-db_full_matched_pc <- subset(db_full_matched, select=c(sub_id, ASD_group, sex, age, pc_ic, pc_nc, weights, pair_id))
+db_full_matched_pc <- subset(db_full_matched, select=c(sub_id, ASD_group, sex, age, pc_ic, pc_nc, pair_id))
 db_full_matched_LongControl <- pivot_longer(db_full_matched_pc, pc_ic:pc_nc, values_to = "PC", names_to = "Condition")
 
 db_full_matched_LongControl$PC <-as.numeric(db_full_matched_LongControl$PC)
@@ -740,10 +740,12 @@ ggplot(data=sum1, aes(y=power_mean_mean, x=ASD_group, group=ASD_group)) +
 
 #### ~ Step 5.3 - Test for group x symptom interactions on behavior ~ ####
 
+db_full_matched_HT_ASD <- subset(db_full_matched, ASD_group == "ASD" | ASD_group == "HT")
+
 #### ~~ Character liking ~~ ####
 
 #Mixed-Effects Model with random intercept for pair
-fit <- lmer(liking_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched)
+fit <- lmer(liking_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched_HT_ASD)
 
 anova_fit <- anova(fit)
 anova_fit
@@ -753,10 +755,11 @@ eta_squared <- effectsize::eta_squared(anova_fit, partial = TRUE)
 print(eta_squared)
 
 # not significant, remove interaction term
-fit <- glm(liking_mean ~ bapq_score + age + sex + (1 | pair_id), data=db_full_matched)
+fit <- glm(liking_mean ~ bapq_score + age + sex, data=db_full_matched_HT_ASD)
 summary(fit)
 
 eta_squared(fit, partial = TRUE) # effect size and CI
+
 
 #Plot relationship
 ggplot(db_full_matched, aes(y=liking_mean, x=bapq_score, color=ASD_group)) + 
@@ -766,7 +769,7 @@ ggplot(db_full_matched, aes(y=liking_mean, x=bapq_score, color=ASD_group)) +
                      labels=c("ASD","HT", "LT")) +
   
   guides(color = FALSE) +
-  geom_smooth(method='lm', color="black", se=T, size=.5) +
+  geom_smooth(method='lm', se=T, size=.5) +
   theme_classic(base_size = 20) +
   theme(axis.title.x=element_text(size=18))
 
@@ -774,7 +777,7 @@ ggplot(db_full_matched, aes(y=liking_mean, x=bapq_score, color=ASD_group)) +
 aggregate(liking_mean ~ ASD_group, db_full_matched, function(x) c(mean = mean(x), sd = sd(x)))
 
 #Mixed-Effects Model with random intercept for pair
-fit <- lmer(affil_mean_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched)
+fit <- lmer(affil_mean_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched_HT_ASD)
 
 #Analysis of deviance table to review results
 anova_fit <- anova(fit)
