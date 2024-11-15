@@ -526,11 +526,11 @@ summary(pairwise_comparisons, infer = c(TRUE, TRUE))
 
 #Mixed-Effects Model with random intercept for pair
 fit_L <- lmer(rejR_L_nc ~ ASD_group + sex + age+ (1 | pair_id), data=db_full_matched)
-anova(fit)
+
 fit_M <- lmer(rejR_M_nc ~ ASD_group + sex + age+ (1 | pair_id), data=db_full_matched)
-anova(fit)
+
 fit_H <- lmer(rejR_H_nc ~ ASD_group + sex + age+ (1 | pair_id), data=db_full_matched)
-anova(fit)
+
 
 #Analysis of deviance table to review results
 anova_fit_L <- anova(fit_L)
