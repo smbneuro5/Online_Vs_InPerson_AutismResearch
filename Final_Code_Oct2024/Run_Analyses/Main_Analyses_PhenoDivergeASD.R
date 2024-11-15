@@ -740,12 +740,10 @@ ggplot(data=sum1, aes(y=power_mean_mean, x=ASD_group, group=ASD_group)) +
 
 #### ~ Step 5.3 - Test for group x symptom interactions on behavior ~ ####
 
-db_full_matched_HT_ASD <- subset(db_full_matched, ASD_group == "ASD" | ASD_group == "HT")
-
 #### ~~ Character liking ~~ ####
 
 #Mixed-Effects Model with random intercept for pair
-fit <- lmer(liking_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched_HT_ASD)
+fit <- lmer(liking_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched)
 
 anova_fit <- anova(fit)
 anova_fit
@@ -753,13 +751,6 @@ anova_fit
 # Get effect size
 eta_squared <- effectsize::eta_squared(anova_fit, partial = TRUE)
 print(eta_squared)
-
-# not significant, remove interaction term
-fit <- glm(liking_mean ~ bapq_score + age + sex, data=db_full_matched_HT_ASD)
-summary(fit)
-
-eta_squared(fit, partial = TRUE) # effect size and CI
-
 
 #Plot relationship
 ggplot(db_full_matched, aes(y=liking_mean, x=bapq_score, color=ASD_group)) + 
@@ -777,7 +768,7 @@ ggplot(db_full_matched, aes(y=liking_mean, x=bapq_score, color=ASD_group)) +
 aggregate(liking_mean ~ ASD_group, db_full_matched, function(x) c(mean = mean(x), sd = sd(x)))
 
 #Mixed-Effects Model with random intercept for pair
-fit <- lmer(affil_mean_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched_HT_ASD)
+fit <- lmer(affil_mean_mean ~ bapq_score*ASD_group + age + sex + (1 | pair_id), data=db_full_matched)
 
 #Analysis of deviance table to review results
 anova_fit <- anova(fit)
