@@ -482,11 +482,11 @@ aggregate(rejR_L_ic ~ ASD_group, db_full_matched, function(x) c(mean = mean(x), 
 
 #Mixed-Effects Model with random intercept for pair
 fit_L <- lmer(rejR_L_ic ~ ASD_group + sex + age+ (1 | pair_id), data=db_full_matched)
-anova(fit)
+
 fit_M <- lmer(rejR_M_ic ~ ASD_group + sex + age+ (1 | pair_id), data=db_full_matched)
-anova(fit)
+
 fit_H <- lmer(rejR_H_ic ~ ASD_group + sex + age+ (1 | pair_id), data=db_full_matched)
-anova(fit)
+
 
 #Analysis of deviance table to review results
 anova_fit_L <- anova(fit_L)
