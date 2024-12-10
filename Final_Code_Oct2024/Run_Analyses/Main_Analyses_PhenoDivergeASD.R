@@ -201,7 +201,7 @@ ggplot(data=sum_social_anxiety, aes(y=lsas_av_score, x=ASD_group, group=ASD_grou
   labs(x="Group", y="Self-Reported SA Symptoms") +
   geom_errorbar(aes(ymin=lsas_av_score-se, ymax=lsas_av_score+se),
                 width=.2, position=position_dodge(.85)) +
-  scale_x_discrete(labels=c("ASD", "HT","Low-trait")) +
+  #scale_x_discrete(labels=c("ASD", "HT","Low-trait")) +
   geom_jitter(data=db_full_matched, aes(y=lsas_av_score, x=ASD_group, color=ASD_group),
               alpha =0.6, width=0.15) +
   scale_color_manual(values=c("#587F65","#1A53B6", "#512C8E"), name="Group") +
@@ -241,7 +241,7 @@ ggplot(data=sum_avpd, aes(y=apdis_score, x=ASD_group, group=ASD_group)) +
   labs(x="Group", y="Self-Reported AVPD Symptoms") +
   geom_errorbar(aes(ymin=apdis_score-se, ymax=apdis_score+se),
                 width=.2, position=position_dodge(.85)) +
-  scale_x_discrete(labels=c("ASD", "HT","Low-trait")) +
+  #scale_x_discrete(labels=c("ASD", "HT","Low-trait")) +
   geom_jitter(data=db_full_matched, aes(y=apdis_score, x=ASD_group, color=ASD_group),
               alpha =0.6, width=0.15) +
   scale_color_manual(values=c("#587F65","#1A53B6", "#512C8E"), name="Group") +
