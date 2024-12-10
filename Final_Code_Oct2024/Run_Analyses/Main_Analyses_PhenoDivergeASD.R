@@ -158,7 +158,7 @@ sum_BAPQ_Symptoms <- summarySE(db_full_matched, measurevar="bapq_score", groupva
 ggplot(data=sum_BAPQ_Symptoms, aes(y=bapq_score, x=ASD_group, group=ASD_group)) +
   geom_bar(aes(fill=ASD_group), stat = "summary", position = "dodge", fun = "mean") +
   scale_fill_manual(values=c("#03A28A","#32A2E7", "#A975FC"), name="Group") +
-  labs(x="Group", y="Self-Reported ASD Symptoms") +
+  labs(x="Group", y="Self-Reported ASD Traits") +
   geom_errorbar(aes(ymin=bapq_score-se, ymax=bapq_score+se),
                 width=.2, position=position_dodge(.85)) +
   #scale_x_discrete(labels=c("ASD", "HT","Low-trait")) +
@@ -272,7 +272,7 @@ eta_squared(fit, partial = TRUE) # effect size and CI
 # plot the relationship
 ggplot(db_full_ASD, aes(y=ados4natot, x=bapq_score)) + 
   geom_point(size=3,  color="#03A28A") + 
-  labs(x = "Self-Reported ASD Symptoms", y = "Clinician-Rated ASD Symptoms") + 
+  labs(x = "Self-Reported ASD Traits", y = "Clinician-Rated ASD Symptoms") + 
   #coord_cartesian(ylim=c(-2.5,2.5), xlim=c(-2.8,2.5)) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
   geom_smooth(method='lm', color="Black", se=T, size=.5) +
@@ -288,7 +288,7 @@ eta_squared(fit, partial = TRUE) # effect size and CI
 # plot the relationship
 ggplot(db_full_ASD, aes(y=ados4narrb, x=bapq_rigid_score)) + 
   geom_point(size=3,  color="#03A28A") + 
-  labs(x = "Self-Reported RRB Symptoms", y = "Clinician-Rated RRB Symptoms") + 
+  labs(x = "Self-Reported RRB Traits", y = "Clinician-Rated RRB Symptoms") + 
   #scale_color_manual(values=c("navy","slateblue1"), name="ASD Group",
   #labels=c("TD","ASD")) +
   #coord_cartesian(ylim=c(-2.5,2.5), xlim=c(-2.8,2.5)) +
@@ -305,7 +305,7 @@ eta_squared(fit, partial = TRUE) # effect size and CI
 # plot the relationship
 ggplot(db_full_ASD, aes(y=ados4nas, x=bapq_SA)) + 
   geom_point(size=3,  color="#03A28A") + 
-  labs(x = "Self-Reported Social Symptoms", y = "Clinician-Rated Social Symptoms") + 
+  labs(x = "Self-Reported Social Traits", y = "Clinician-Rated Social Symptoms") + 
   #scale_color_manual(values=c("navy","slateblue1"), name="ASD Group",
   #labels=c("TD","ASD")) +
   #coord_cartesian(ylim=c(-2.5,2.5), xlim=c(-2.8,2.5)) +
