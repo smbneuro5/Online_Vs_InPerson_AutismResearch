@@ -271,7 +271,7 @@ eta_squared(fit, partial = TRUE) # effect size and CI
 
 # plot the relationship
 ggplot(db_full_ASD, aes(y=ados4natot, x=bapq_score)) + 
-  geom_point(size=3,  color="#A975FC") + 
+  geom_point(size=3,  color="#03A28A") + 
   labs(x = "Self-Reported ASD Symptoms", y = "Clinician-Rated ASD Symptoms") + 
   #coord_cartesian(ylim=c(-2.5,2.5), xlim=c(-2.8,2.5)) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
@@ -287,7 +287,7 @@ eta_squared(fit, partial = TRUE) # effect size and CI
 
 # plot the relationship
 ggplot(db_full_ASD, aes(y=ados4narrb, x=bapq_rigid_score)) + 
-  geom_point(size=3,  color="#A975FC") + 
+  geom_point(size=3,  color="#03A28A") + 
   labs(x = "Self-Reported RRB Symptoms", y = "Clinician-Rated RRB Symptoms") + 
   #scale_color_manual(values=c("navy","slateblue1"), name="ASD Group",
   #labels=c("TD","ASD")) +
@@ -304,7 +304,7 @@ eta_squared(fit, partial = TRUE) # effect size and CI
 
 # plot the relationship
 ggplot(db_full_ASD, aes(y=ados4nas, x=bapq_SA)) + 
-  geom_point(size=3,  color="#A975FC") + 
+  geom_point(size=3,  color="#03A28A") + 
   labs(x = "Self-Reported Social Symptoms", y = "Clinician-Rated Social Symptoms") + 
   #scale_color_manual(values=c("navy","slateblue1"), name="ASD Group",
   #labels=c("TD","ASD")) +
